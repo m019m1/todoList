@@ -16,9 +16,9 @@
 	.instruction {
 		grid-column: 1;
 		grid-row: 1;
-		margin-top: 0px;
 		justify-self: center;
-		align-self: center;
+		align-self: end;
+		margin-bottom: 5px;
 	}
 	.newTask {
 		height: 100px;
@@ -38,7 +38,9 @@
 	.taskListHeader {
 		grid-column: 2;
 		grid-row: 1;
-		margin: 0px 10px 0px 20px;
+		margin: 0px 10px 5px 20px;
+		align-self: end;
+		justify-self: center;
 	}
 	.taskList {
 		list-style-type: none;
@@ -49,7 +51,8 @@
 		
 		/* align-self: start; */
 	}
-		.task {
+		.task, .edit {
+			box-sizing: border-box;
 			white-space: pre-wrap;
 			overflow-wrap: break-word;
 			/* word-break: break-all; */
@@ -60,10 +63,14 @@
 			/* row-gap: 5px; */
 			margin: 0px 10px 15px 20px;
 			position: relative;
-			min-width: 40px;
 			align-self: start;
 			text-align: justify;
-			min-height: 45px;
+			min-height: 55px;
+		}
+ 		.edit {
+			outline: none;
+			resize: none;
+			background-color:  rgba(156, 243, 43, 0.521);
 		}
 		.made {
 			background-color:  rgba(182, 182, 182, 0.521);
