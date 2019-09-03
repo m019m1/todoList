@@ -27,7 +27,7 @@ $('.newTask').on('keyup', function(e) {
 		text: this.value
 	}).appendTo($task);
 	
-	$done.on('click', () => {
+	$done.on('click', (e) => {
 		if(!$task.is('.made')) {
 			counter--;
 		} else counter++;
@@ -40,7 +40,8 @@ $('.newTask').on('keyup', function(e) {
 		$task.remove();
 	});
 	
-	$task.on('dblclick', function edit() {
+	$task.on('dblclick', function (e) {
+		if($(e.target).is('.done')) return;
 		$task.hide();
 		let $edit = $("<textarea/>", {
 			'class': 'edit'
