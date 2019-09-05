@@ -1,5 +1,5 @@
 class Task {
-	constructor (text) {
+	constructor (text, made = false) {
 		this._$task = $('<li/>', {
 			'class': 'task',
 			
@@ -22,18 +22,31 @@ class Task {
 			'class': 'textOfTask',
 			text
 		}).appendTo(this._$task);
+		this._made = made;
+		this._running =  true;
 		this.run();
 	}
 
 	run() {
+		if(this._made) {
+			this._$task.addClass('made');
+			this._$done.attr('checked', 'checked');
+			this._$close.toggle();
+		}
+
 		this._$done.on('click', () => {
 			this._$task.toggleClass('made');
-			this._$task.is('.made') ? taskCounter-- : taskCounter++;
-			showCount();
 			this._$close.toggle();
+			this._made ? this._made = false : this._made = true;
+			showCount();
 		});
+
 		this._$close.on('click', () => {
 			this._$task.remove();
+			this._running = false;
+			tasks = tasks.filter ( (task) => {
+				return task._running;
+			});
 		});
 		this._$task.on('dblclick', (e) => {
 			if($(e.target).is('.done')) return;
@@ -60,34 +73,35 @@ class Task {
 	}
 }
 
-let taskCounter = 0;
+let tasksToDo;
+let tasks = [];
 
+// do on load
 $(()=> {
-	let numberOfTasks = +localStorage['numberOfTasks'];
-	if (!numberOfTasks) return;
-	// let $taskList = $('.taskList');
-	for(let i = 0; i < numberOfTasks; i++) {
-		// let task = JSON.parse(localStorage[`task${i}`]);
-		// $taskList.append(task);
-		// console.log(task);
-		let task = new Task(localStorage[`task${i}`]);
+	let tasksNumber = +localStorage['tasksNumber'];
+	if (!tasksNumber) return;
+	for(let i = 0; i < tasksNumber; i++) {
+		let task = JSON.parse( localStorage[`task${i}`] );
+		tasks.push( new Task(task[0], task[1]) );
 	}
-
-	taskCounter = numberOfTasks;
 	showCount();
 });
 
+// do before unload
 $(window).on('beforeunload', () => {
-	let $texts = $('.textOfTask');
-	$texts.each( (i, text) => {
-	// let $tasks =  Array.from(document.getElementsByClassName('task'));
-	// $tasks.forEach( (task, i) => {
-		// let json = JSON.stringify(text);
-		// let json = JSON.stringify(this);
-		localStorage[`task${i}`] = $(text).text();
-	}); 
-	localStorage['taskCounter'] = taskCounter;
-	localStorage['numberOfTasks'] = $texts.length;
+	tasks.forEach( (task, i) => {
+		let json = JSON.stringify( [ task._$textOfTask[0].innerHTML, task._made] )
+		localStorage[`task${i}`] = json;
+	});
+
+	//delete all extra slots in local storage
+	let tasksNumber = +localStorage['tasksNumber'];
+	for(let i = tasks.length; i < tasksNumber ; i++) {
+		delete localStorage[`task${i}`];
+	}
+
+	localStorage['tasksToDo'] = tasksToDo;
+	localStorage['tasksNumber'] = tasks.length;
 });
 
 
@@ -95,16 +109,18 @@ $(window).on('beforeunload', () => {
 let text = $('.newTask').val();
 $('.newTask').focus().val('').val(text);
 
+
+// create a task
 $('.newTask').on('keyup', function (e) {
 	if( !(e.key == 'Enter' && e.ctrlKey) || !this.value ) return;
-	let task = new Task(this.value);
-	taskCounter++;
+	tasks.push( new Task(this.value) );
 	showCount();
 	this.value = '';
 });
 
 function showCount() {
-	switch (taskCounter) {
+	tasksToDo = tasks.filter( task => { return !task._made; } ).length;
+	switch (tasksToDo) {
 		case 0:
 			$('.taskListHeader').text(`Nothing to do... boring...`);
 			break;
@@ -112,7 +128,7 @@ function showCount() {
 			$('.taskListHeader').html(`To do 1 task (Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit)`);
 			break;
 		default:
-			$('.taskListHeader').html(`To do ${taskCounter} tasks (Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit)`);
+			$('.taskListHeader').html(`To do ${tasksToDo} tasks (Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit)`);
 			break;
 	}
 }
