@@ -47,15 +47,12 @@
 		grid-column: 2;
 		grid-row: 2;
 		display: grid;
-		/* grid-template-rows: 3; */
-		
-		/* align-self: start; */
+		grid-auto-flow: row;
 	}
 		.task, .edit {
 			box-sizing: border-box;
 			white-space: pre-wrap;
 			overflow-wrap: break-word;
-			/* word-break: break-all; */
 			background-color:  rgba(43, 243, 60, 0.521);
 			border: 2px solid rgb(91, 177, 83);
 			border-radius: 7px;
@@ -71,6 +68,7 @@
 			outline: none;
 			resize: none;
 			background-color:  rgba(156, 243, 43, 0.521);
+			overflow: clip;
 		}
 		.made {
 			background-color:  rgba(182, 182, 182, 0.521);
