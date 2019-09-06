@@ -2,19 +2,24 @@
 	margin: 0;
 	padding: 0;
 }
+.application {
+
+}
 .wrapper {
-	display: inline-grid;
+	resize: horizontal;
+	overflow: auto;
+	display: grid;
+	border: 3px dashed rgb(240, 164, 50);
+	background-color: rgb(255, 254, 211);
+	border-radius: 20px;
+	max-width: 90%;
+	min-height: 220px;
+	margin: auto;
+	min-width: 510px;
 	grid-template-columns: 200px 1fr;
 	grid-template-rows: 50px 1fr;
-	min-height: 200px;
-	border: 3px dashed rgb(240, 164, 50);
-	border-radius: 20px;
 	padding: 10px;
-	background-color: rgb(255, 254, 211);
 	grid-column-gap: 10px;
-	width: 60%;
-	min-width: 510px;
-	margin: auto;
 }
 .instruction {
 	grid-column: 1;
@@ -52,6 +57,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fit, 300px);
 		gap: 10px;
+		align-content: start;
 	}
 		.task, .edit {
 			box-sizing: border-box;
