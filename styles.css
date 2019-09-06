@@ -2,9 +2,6 @@
 	margin: 0;
 	padding: 0;
 }
-.application {
-
-}
 .wrapper {
 	resize: horizontal;
 	overflow: auto;
@@ -14,10 +11,10 @@
 	border-radius: 20px;
 	max-width: 90%;
 	min-height: 220px;
-	margin: auto;
+	margin: 20px auto;
 	min-width: 510px;
 	grid-template-columns: 200px 1fr;
-	grid-template-rows: 50px 1fr;
+	grid-template-rows: 70px 1fr;
 	padding: 10px;
 	grid-column-gap: 10px;
 }
@@ -50,6 +47,10 @@
 		align-self: end;
 		justify-self: center;
 	}
+		.tasksToDo {
+			font-size: 2em;
+			color: rgb(43, 73, 243);
+		}
 	.taskList {
 		list-style-type: none;
 		grid-column: 2;

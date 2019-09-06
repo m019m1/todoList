@@ -125,10 +125,10 @@ function showCount() {
 			$('.taskListHeader').text(`Nothing to do... boring...`);
 			break;
 		case 1:
-			$('.taskListHeader').html(`To do 1 task (Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit)`);
+			$('.taskListHeader').html(`To do <span class="tasksToDo">1</span>  task <br> Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit`);
 			break;
 		default:
-			$('.taskListHeader').html(`To do ${tasksToDo} tasks (Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit)`);
+			$('.taskListHeader').html(`To do <span class="tasksToDo">${tasksToDo}</span> tasks <br> Double click to edit.<br>  "Ctrl+Enter" to save. Esc to exit`);
 			break;
 	}
 }
