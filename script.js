@@ -56,7 +56,7 @@ class Task {
 			$edit.css('height', `${this._$task.height()}px`);
 			this._$task.hide();
 			$edit.insertAfter(this._$task);
-			$edit.focus().val( this._$textOfTask.text() );
+			$edit.focus().val( this._$textOfTask.text() ); // set focus to the last character in textarea
 			
 			$edit.on('keyup', (e) => {
 				if(e.key == 'Escape') {
@@ -78,6 +78,7 @@ let tasks = [];
 
 // do on load
 $(()=> {
+	$('.newTask').focus();
 	let tasksNumber = +localStorage['tasksNumber'];
 	if (!tasksNumber) return;
 	for(let i = 0; i < tasksNumber; i++) {
@@ -103,12 +104,6 @@ $(window).on('beforeunload', () => {
 	localStorage['tasksToDo'] = tasksToDo;
 	localStorage['tasksNumber'] = tasks.length;
 });
-
-
-// set focus to the last character in textarea
-let text = $('.newTask').val();
-$('.newTask').focus().val('').val(text);
-
 
 // create a task
 $('.newTask').on('keyup', function (e) {

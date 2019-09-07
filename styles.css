@@ -9,6 +9,7 @@
 	border: 3px dashed rgb(240, 164, 50);
 	background-color: rgb(255, 254, 211);
 	border-radius: 20px;
+	width: 60%;
 	max-width: 90%;
 	min-height: 220px;
 	margin: 20px auto;
